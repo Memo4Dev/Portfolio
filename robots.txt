@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://memo-portofoli.netlify.app/sitemap.xml
