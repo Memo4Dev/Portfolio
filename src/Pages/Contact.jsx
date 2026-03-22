@@ -33,14 +33,17 @@ const ContactPage = () => {
     });
 
     try {
-      // Get form data
       const form = e.target;
-      const formData = new FormData(form);
+      const data = new FormData(form);
 
-      // Submit form
-      await form.submit();
+      const response = await fetch("https://formsubmit.co/ajax/mesam7849@gmail.com", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: data,
+      });
 
-      // Show success message
+      if (!response.ok) throw new Error("Network response was not ok");
+
       Swal.fire({
         title: 'Success!',
         text: 'Your message has been sent successfully!',
@@ -52,13 +55,8 @@ const ContactPage = () => {
         color: '#ffffff'
       });
 
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
+      setFormData({ name: "", email: "", subject: "", message: "" });
+
     } catch (error) {
       Swal.fire({
         title: 'Error!',
@@ -110,14 +108,9 @@ const ContactPage = () => {
               </div>
 
               <form
-                action="https://formsubmit.co/mesam7849@gmail.com" 
-                method="POST"
                 onSubmit={handleSubmit}
                 className="space-y-6"
               >
-                {/* FormSubmit Configuration */}
-                <input type="hidden" name="_template" value="table" />
-                <input type="hidden" name="_captcha" value="false" />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="relative group">
