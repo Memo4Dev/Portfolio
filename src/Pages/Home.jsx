@@ -78,7 +78,7 @@ const TYPING_SPEED = 100;
 const ERASING_SPEED = 50;
 const PAUSE_DURATION = 2000;
 const WORDS = ["Computer Science Student", "Tech Enthusiast"];
-const TECH_STACK = ["C++", "Python", "Dart"];
+const TECH_STACK = ["C++", "Java Script", "React"];
 const SOCIAL_LINKS = [
   { icon: Github, link: "https://github.com/memo4dev" },
   { icon: Linkedin, link: "https://www.linkedin.com/in/mohamed-esam-234b482a2/" },
@@ -143,7 +143,7 @@ const Home = () => {
 
   // Lottie configuration
   const lottieOptions = {
-    src: "https://lottie.host/58753882-bb6a-49f5-a2c0-950eda1e135a/NLbpVqGegK.lottie",
+    src: "https://lottie.host/b80075fc-bc0b-4468-8a91-fb6836ad6ab9/L8OuGL2VcN.lottie",
     loop: true,
     autoplay: true,
     style: { width: "100%", height: "100%" },
@@ -157,9 +157,9 @@ const Home = () => {
     <div className="min-h-screen bg-[#030014] overflow-hidden" id="Home">
       <div className={`relative z-10 transition-all duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
         <div className="container mx-auto px-[8%] sm:px-[10%] lg:px-[12%] min-h-screen">
-          <div className="flex flex-col lg:flex-row items-center justify-center h-screen md:justify-between gap-0 sm:gap-12 lg:gap-20">
+          <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen pt-24 lg:pt-0 md:justify-between gap-0 sm:gap-12 lg:gap-20">
             {/* Left Column */}
-            <div className="w-full lg:w-1/2 space-y-6 sm:space-y-8 text-left lg:text-left order-1 lg:order-1 mt-[10%] lg:mt-0"
+            <div className="w-full lg:w-1/2 space-y-6 sm:space-y-8 text-left lg:text-left order-1 lg:order-1 mt-16 lg:mt-0"
               data-aos="fade-right"
               data-aos-delay="200">
               <div className="space-y-4 sm:space-y-6">

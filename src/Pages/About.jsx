@@ -1,7 +1,8 @@
-import React, { useEffect, memo, useMemo } from "react"
+import React, { useEffect, memo, useMemo, useState } from "react"
 import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, UserCheck } from "lucide-react"
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import { supabase } from "../supabase"
 
 // Memoized Components
 const Header = memo(() => (
@@ -113,21 +114,45 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
 ));
 
 const AboutPage = () => {
-  // Memoized calculations
-  const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
+  const [stats, setStats] = useState(() => {
     const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
     const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
-    
-    const startDate = new Date("2023-03-06");
-    const today = new Date();
-    const experience = today.getFullYear() - startDate.getFullYear() -
-      (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
-
     return {
       totalProjects: storedProjects.length,
       totalCertificates: storedCertificates.length,
-      YearExperience: experience
     };
+  });
+
+  const YearExperience = useMemo(() => {
+    const startDate = new Date("2023-03-06");
+    const today = new Date();
+    return today.getFullYear() - startDate.getFullYear() -
+      (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
+  }, []);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const [
+          { count: projectCount, error: projectError },
+          { count: certificateCount, error: certificateError }
+        ] = await Promise.all([
+          supabase.from("projects").select("*", { count: 'exact', head: true }),
+          supabase.from("certificates").select("*", { count: 'exact', head: true })
+        ]);
+
+        if (!projectError && !certificateError) {
+          setStats({
+            totalProjects: projectCount || 0,
+            totalCertificates: certificateCount || 0,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+      }
+    };
+
+    fetchStats();
   }, []);
 
   // Optimized AOS initialization
@@ -159,7 +184,7 @@ const AboutPage = () => {
     {
       icon: Code,
       color: "from-[#6366f1] to-[#a855f7]",
-      value: totalProjects,
+      value: stats.totalProjects,
       label: "Total Projects",
       description: "Innovative web solutions crafted",
       animation: "fade-right",
@@ -167,7 +192,7 @@ const AboutPage = () => {
     {
       icon: Award,
       color: "from-[#a855f7] to-[#6366f1]",
-      value: totalCertificates,
+      value: stats.totalCertificates,
       label: "Certificates",
       description: "Professional skills validated",
       animation: "fade-up",
@@ -180,7 +205,7 @@ const AboutPage = () => {
       description: "Continuous learning journey",
       animation: "fade-left",
     },
-  ], [totalProjects, totalCertificates, YearExperience]);
+  ], [stats.totalProjects, stats.totalCertificates, YearExperience]);
 
   return (
     <div
@@ -219,7 +244,7 @@ const AboutPage = () => {
             </p>
 
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4 lg:px-0 w-full">
-              <a href="https://drive.google.com/file/d/1C0fzNQtjw43qK2w8J3yfMm33xjppNM3N/view?usp=drive_link" target="_blank" className="w-full lg:w-auto">
+              <a href="https://drive.google.com/file/d/12g-m1Klycr3PJTYtaj-5C4fidLYefFJB/view?usp=sharing" target="_blank" className="w-full lg:w-auto">
               <button 
                 data-aos="fade-up"
                 data-aos-duration="800"

@@ -14,7 +14,6 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
   
   const handleDetails = (e) => {
     if (!id) {
-      console.log("ID kosong");
       e.preventDefault();
       alert("Project details are not available");
     }
@@ -32,6 +31,8 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
             <img
               src={Img}
               alt={Title}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
             />
           </div>
