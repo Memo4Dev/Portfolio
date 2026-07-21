@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { lazy, Suspense } from 'react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import "./index.css";
 import Navbar from "./components/Navbar";
 import AnimatedBackground from "./components/Background";
@@ -10,6 +12,50 @@ import ContactPage from "./Pages/Contact";
 
 import ProjectDetails from "./components/ProjectDetail";
 const AdminPage = lazy(() => import("./Pages/Admin"));
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+    background: {
+      default: '#030014',
+      paper: '#030014',
+    },
+  },
+});
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('ErrorBoundary caught:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-[#030014] flex items-center justify-center text-white">
+          <div className="text-center space-y-4">
+            <h1 className="text-2xl font-bold">Something went wrong</h1>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-purple-600 rounded-lg hover:bg-purple-500"
+            >
+              Reload Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const LoadingFallback = () => (
   <div className="min-h-screen bg-[#030014] flex items-center justify-center">
@@ -27,40 +73,50 @@ const Footer = () => (
 );
 
 const LandingPage = () => (
-  <main>
-    <Navbar />
+  <main className="relative">
     <AnimatedBackground />
-    <Home />
-    <About />
-    <Portofolio />
-    <ContactPage />
-    <Footer />
+    <div className="relative z-10">
+      <Navbar />
+      <Home />
+      <About />
+      <Portofolio />
+      <ContactPage />
+      <Footer />
+    </div>
   </main>
 );
 
 const ProjectPageLayout = () => (
-  <main>
-    <ProjectDetails />
-    <Footer />
+  <main className="relative">
+    <AnimatedBackground />
+    <div className="relative z-10">
+      <ProjectDetails />
+      <Footer />
+    </div>
   </main>
 );
 
 function App() {
   return (
-    <BrowserRouter future={{ v7_startTransition: true }}>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/project/:id" element={<ProjectPageLayout />} />
-        {import.meta.env.DEV && (
-          <Route path="/admin" element={
-            <Suspense fallback={<LoadingFallback />}>
-              <AdminPage />
-            </Suspense>
-          } />
-        )}
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ErrorBoundary>
+        <BrowserRouter future={{ v7_startTransition: true }}>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/project/:id" element={<ProjectPageLayout />} />
+            {import.meta.env.DEV && (
+              <Route path="/admin" element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <AdminPage />
+                </Suspense>
+              } />
+            )}
+          </Routes>
+        </BrowserRouter>
+      </ErrorBoundary>
+    </ThemeProvider>
   );
 }
 
-export default App;
+export default App;

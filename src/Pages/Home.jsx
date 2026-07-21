@@ -90,7 +90,7 @@ const Home = () => {
   const [isTyping, setIsTyping] = useState(true)
   const [wordIndex, setWordIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(true)
   const [isHovering, setIsHovering] = useState(false)
 
   // Optimize AOS initialization

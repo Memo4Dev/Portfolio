@@ -115,12 +115,16 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
 
 const AboutPage = () => {
   const [stats, setStats] = useState(() => {
-    const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
-    const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
-    return {
-      totalProjects: storedProjects.length,
-      totalCertificates: storedCertificates.length,
-    };
+    try {
+      const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
+      const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
+      return {
+        totalProjects: storedProjects.length,
+        totalCertificates: storedCertificates.length,
+      };
+    } catch {
+      return { totalProjects: 0, totalCertificates: 0 };
+    }
   });
 
   const YearExperience = useMemo(() => {
