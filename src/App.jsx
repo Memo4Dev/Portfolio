@@ -101,7 +101,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <ErrorBoundary>
-        <BrowserRouter future={{ v7_startTransition: true }}>
+        <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')} future={{ v7_startTransition: true }}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/project/:id" element={<ProjectPageLayout />} />
