@@ -91,7 +91,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#030014] overflow-hidden" id="Contact">
+    <div className="min-h-screen overflow-hidden" id="Contact">
       <div className="container mx-auto px-[5%] md:px-[10%] py-20">
         {/* Title */}
         <div className="text-center mb-12" data-aos="fade-up">
