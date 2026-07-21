@@ -34,7 +34,8 @@ const ContactPage = () => {
 
     try {
       let response;
-      try {
+
+      if (import.meta.env.DEV) {
         response = await fetch("/api/contact", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -45,7 +46,8 @@ const ContactPage = () => {
             message: formData.message,
           }),
         });
-      } catch {
+        if (!response.ok) throw new Error("Failed to send message");
+      } else {
         const fallbackData = new FormData();
         fallbackData.append("name", formData.name);
         fallbackData.append("email", formData.email);
