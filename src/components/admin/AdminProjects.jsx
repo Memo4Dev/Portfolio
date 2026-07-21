@@ -21,6 +21,8 @@ const EMPTY_FORM = {
   Description: "",
   TechStack: "",
   Features: "",
+  Username: "",
+  Password: "",
 };
 
 const AdminProjects = () => {
@@ -61,6 +63,8 @@ const AdminProjects = () => {
         Description: project.Description || "",
         TechStack: (project.TechStack || []).join(", "),
         Features: (project.Features || []).join(", "),
+        Username: project.Username || "",
+        Password: project.Password || "",
       });
     } else {
       setEditingProject(null);
@@ -114,6 +118,8 @@ const AdminProjects = () => {
         Description: form.Description,
         TechStack: form.TechStack.split(",").map((s) => s.trim()).filter(Boolean),
         Features: form.Features.split(",").map((s) => s.trim()).filter(Boolean),
+        Username: form.Username,
+        Password: form.Password,
       };
 
       if (editingProject) {
@@ -279,6 +285,20 @@ const AdminProjects = () => {
             <div className="mt-4">
               <label className="text-sm text-gray-300">Features (comma separated)</label>
               <input type="text" value={form.Features} onChange={(e) => setForm({ ...form, Features: e.target.value })} className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-2.5 mt-1 focus:border-[#6366f1] focus:outline-none transition-colors" placeholder="User Auth, Dark Mode, Responsive" />
+            </div>
+
+            <div className="mt-4 p-4 bg-white/[0.02] rounded-xl border border-white/10">
+              <p className="text-xs text-gray-500 mb-3">Optional — fill only if this project requires login credentials</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm text-gray-300">Login Username</label>
+                  <input type="text" value={form.Username} onChange={(e) => setForm({ ...form, Username: e.target.value })} className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-2.5 mt-1 focus:border-[#6366f1] focus:outline-none transition-colors" placeholder="e.g. admin" />
+                </div>
+                <div>
+                  <label className="text-sm text-gray-300">Login Password</label>
+                  <input type="text" value={form.Password} onChange={(e) => setForm({ ...form, Password: e.target.value })} className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-2.5 mt-1 focus:border-[#6366f1] focus:outline-none transition-colors" placeholder="e.g. password123" />
+                </div>
+              </div>
             </div>
 
             <div className="flex gap-3 mt-6">

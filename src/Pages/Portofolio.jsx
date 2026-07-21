@@ -338,6 +338,8 @@ export default function FullWidthTabs() {
                       Description={project.Description}
                       Link={project.Link}
                       id={project.id}
+                      Username={project.Username}
+                      Password={project.Password}
                     />
                   </div>
                 ))}

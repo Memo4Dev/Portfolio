@@ -1,17 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
-  ArrowLeft, ExternalLink, Github, Code2, Star,
-  ChevronRight, Layers, Layout, Globe, Package, Cpu, Code, Database
+  ArrowLeft,
+  ExternalLink,
+  Github,
+  Code2,
+  Star,
+  ChevronRight,
+  Layers,
+  Layout,
+  Globe,
+  Package,
+  Cpu,
+  Code,
+  Database,
+  Eye,
+  EyeOff,
+  Copy,
+  Check,
+  LogIn,
 } from "lucide-react";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import { supabase, mapProjectRow } from "../supabase";
 
 function isSafeUrl(url) {
   if (!url) return false;
   try {
     const parsed = new URL(url);
-    return ['https:', 'http:'].includes(parsed.protocol);
+    return ["https:", "http:"].includes(parsed.protocol);
   } catch {
     return false;
   }
@@ -20,14 +36,15 @@ function isSafeUrl(url) {
 const TECH_ICONS = {
   React: Globe,
   Tailwind: Layout,
-  Express: Cpu,
-  TypeScript: Code,
   NextJS: Layout,
+  Express: Cpu,
   NodeJS: Cpu,
   Supabase: Database,
   MongoDB: Database,
   Mango: Database,
+  TypeScript: Code,
   Javascript: Code,
+  Python: Code,
   HTML: Code,
   CSS: Code,
   default: Package,
@@ -35,7 +52,7 @@ const TECH_ICONS = {
 
 const TechBadge = ({ tech }) => {
   const Icon = TECH_ICONS[tech] || TECH_ICONS["default"];
-  
+
   return (
     <div className="group relative overflow-hidden px-3 py-2 md:px-4 md:py-2.5 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-xl border border-blue-500/10 hover:border-blue-500/30 transition-all duration-300 cursor-default">
       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/10 group-hover:to-purple-500/10 transition-all duration-500" />
@@ -73,21 +90,35 @@ const ProjectStats = ({ project }) => {
 
       <div className="relative z-10 flex items-center space-x-2 md:space-x-3 bg-white/5 p-2 md:p-3 rounded-lg border border-blue-500/20 transition-all duration-300 hover:scale-105 hover:border-blue-500/50 hover:shadow-lg">
         <div className="bg-blue-500/20 p-1.5 md:p-2 rounded-full">
-          <Code2 className="text-blue-300 w-4 h-4 md:w-6 md:h-6" strokeWidth={1.5} />
+          <Code2
+            className="text-blue-300 w-4 h-4 md:w-6 md:h-6"
+            strokeWidth={1.5}
+          />
         </div>
         <div className="flex-grow">
-          <div className="text-lg md:text-xl font-semibold text-blue-200">{techStackCount}</div>
-          <div className="text-[10px] md:text-xs text-gray-400">Total Technology</div>
+          <div className="text-lg md:text-xl font-semibold text-blue-200">
+            {techStackCount}
+          </div>
+          <div className="text-[10px] md:text-xs text-gray-400">
+            Total Technology
+          </div>
         </div>
       </div>
 
       <div className="relative z-10 flex items-center space-x-2 md:space-x-3 bg-white/5 p-2 md:p-3 rounded-lg border border-purple-500/20 transition-all duration-300 hover:scale-105 hover:border-purple-500/50 hover:shadow-lg">
         <div className="bg-purple-500/20 p-1.5 md:p-2 rounded-full">
-          <Layers className="text-purple-300 w-4 h-4 md:w-6 md:h-6" strokeWidth={1.5} />
+          <Layers
+            className="text-purple-300 w-4 h-4 md:w-6 md:h-6"
+            strokeWidth={1.5}
+          />
         </div>
         <div className="flex-grow">
-          <div className="text-lg md:text-xl font-semibold text-purple-200">{featuresCount}</div>
-          <div className="text-[10px] md:text-xs text-gray-400">Key Features</div>
+          <div className="text-lg md:text-xl font-semibold text-purple-200">
+            {featuresCount}
+          </div>
+          <div className="text-[10px] md:text-xs text-gray-400">
+            Key Features
+          </div>
         </div>
       </div>
     </div>
@@ -95,15 +126,15 @@ const ProjectStats = ({ project }) => {
 };
 
 const handleGithubClick = (githubLink) => {
-  if (githubLink === 'Private') {
+  if (githubLink === "Private") {
     Swal.fire({
-      icon: 'info',
-      title: 'Source Code Private',
-      text: 'Sorry, the source code for this project is private.',
-      confirmButtonText: 'Understand',
-      confirmButtonColor: '#3085d6',
-      background: '#030014',
-      color: '#ffffff'
+      icon: "info",
+      title: "Source Code Private",
+      text: "Sorry, the source code for this project is private.",
+      confirmButtonText: "Understand",
+      confirmButtonColor: "#3085d6",
+      background: "#030014",
+      color: "#ffffff",
     });
     return false;
   }
@@ -115,6 +146,8 @@ const ProjectDetails = () => {
   const navigate = useNavigate();
   const [project, setProject] = useState(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [showCredentials, setShowCredentials] = useState(false);
+  const [copiedField, setCopiedField] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -122,9 +155,9 @@ const ProjectDetails = () => {
     const fetchProject = async () => {
       try {
         const { data, error } = await supabase
-          .from('projects')
-          .select('*')
-          .eq('id', id)
+          .from("projects")
+          .select("*")
+          .eq("id", id)
           .single();
 
         if (error) throw error;
@@ -134,19 +167,20 @@ const ProjectDetails = () => {
             ...mapped,
             Features: mapped.Features || [],
             TechStack: mapped.TechStack || [],
-            Github: mapped.Github || 'https://github.com/memo4dev',
+            Github: mapped.Github || "https://github.com/memo4dev",
           };
           setProject(enhancedProject);
         }
       } catch {
-        const storedProjects = JSON.parse(localStorage.getItem("projects")) || [];
+        const storedProjects =
+          JSON.parse(localStorage.getItem("projects")) || [];
         const selectedProject = storedProjects.find((p) => String(p.id) === id);
         if (selectedProject) {
           const enhancedProject = {
             ...selectedProject,
             Features: selectedProject.Features || [],
             TechStack: selectedProject.TechStack || [],
-            Github: selectedProject.Github || 'https://github.com/memo4dev',
+            Github: selectedProject.Github || "https://github.com/memo4dev",
           };
           setProject(enhancedProject);
         }
@@ -161,7 +195,9 @@ const ProjectDetails = () => {
       <div className="min-h-screen bg-[#030014] flex items-center justify-center">
         <div className="text-center space-y-6 animate-fadeIn">
           <div className="w-16 h-16 md:w-24 md:h-24 mx-auto border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
-          <h2 className="text-xl md:text-3xl font-bold text-white">Loading Project...</h2>
+          <h2 className="text-xl md:text-3xl font-bold text-white">
+            Loading Project...
+          </h2>
         </div>
       </div>
     );
@@ -186,9 +222,9 @@ const ProjectDetails = () => {
               onClick={() => {
                 navigate("/");
                 setTimeout(() => {
-                  const element = document.getElementById('Portofolio');
+                  const element = document.getElementById("Portofolio");
                   if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
+                    element.scrollIntoView({ behavior: "smooth" });
                   }
                 }, 100);
               }}
@@ -224,32 +260,96 @@ const ProjectDetails = () => {
 
               <div className="flex flex-wrap gap-3 md:gap-4">
                 {isSafeUrl(project.Link) && (
-                <a
-                  href={project.Link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative inline-flex items-center space-x-1.5 md:space-x-2 px-4 md:px-8 py-2.5 md:py-4 bg-gradient-to-r from-blue-600/10 to-purple-600/10 hover:from-blue-600/20 hover:to-purple-600/20 text-blue-300 rounded-xl transition-all duration-300 border border-blue-500/20 hover:border-blue-500/40 backdrop-blur-xl overflow-hidden text-sm md:text-base"
-                >
-                  <div className="absolute inset-0 translate-y-[100%] bg-gradient-to-r from-blue-600/10 to-purple-600/10 transition-transform duration-300 group-hover:translate-y-[0%]" />
-                  <ExternalLink className="relative w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" />
-                  <span className="relative font-medium">Live Demo</span>
-                </a>
+                  <a
+                    href={project.Link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative inline-flex items-center space-x-1.5 md:space-x-2 px-4 md:px-8 py-2.5 md:py-4 bg-gradient-to-r from-blue-600/10 to-purple-600/10 hover:from-blue-600/20 hover:to-purple-600/20 text-blue-300 rounded-xl transition-all duration-300 border border-blue-500/20 hover:border-blue-500/40 backdrop-blur-xl overflow-hidden text-sm md:text-base"
+                  >
+                    <div className="absolute inset-0 translate-y-[100%] bg-gradient-to-r from-blue-600/10 to-purple-600/10 transition-transform duration-300 group-hover:translate-y-[0%]" />
+                    <ExternalLink className="relative w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" />
+                    <span className="relative font-medium">Live Demo</span>
+                  </a>
                 )}
 
                 {isSafeUrl(project.Github) && (
-                <a
-                  href={project.Github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative inline-flex items-center space-x-1.5 md:space-x-2 px-4 md:px-8 py-2.5 md:py-4 bg-gradient-to-r from-purple-600/10 to-pink-600/10 hover:from-purple-600/20 hover:to-pink-600/20 text-purple-300 rounded-xl transition-all duration-300 border border-purple-500/20 hover:border-purple-500/40 backdrop-blur-xl overflow-hidden text-sm md:text-base"
-                  onClick={(e) => !handleGithubClick(project.Github) && e.preventDefault()}
-                >
-                  <div className="absolute inset-0 translate-y-[100%] bg-gradient-to-r from-purple-600/10 to-pink-600/10 transition-transform duration-300 group-hover:translate-y-[0%]" />
-                  <Github className="relative w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" />
-                  <span className="relative font-medium">Github</span>
-                </a>
+                  <a
+                    href={project.Github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative inline-flex items-center space-x-1.5 md:space-x-2 px-4 md:px-8 py-2.5 md:py-4 bg-gradient-to-r from-purple-600/10 to-pink-600/10 hover:from-purple-600/20 hover:to-pink-600/20 text-purple-300 rounded-xl transition-all duration-300 border border-purple-500/20 hover:border-purple-500/40 backdrop-blur-xl overflow-hidden text-sm md:text-base"
+                    onClick={(e) =>
+                      !handleGithubClick(project.Github) && e.preventDefault()
+                    }
+                  >
+                    <div className="absolute inset-0 translate-y-[100%] bg-gradient-to-r from-purple-600/10 to-pink-600/10 transition-transform duration-300 group-hover:translate-y-[0%]" />
+                    <Github className="relative w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" />
+                    <span className="relative font-medium">Github</span>
+                  </a>
+                )}
+
+                {(project.Username || project.Password) && (
+                  <button
+                    onClick={() => setShowCredentials(!showCredentials)}
+                    className="group relative inline-flex items-center space-x-1.5 md:space-x-2 px-4 md:px-8 py-2.5 md:py-4 bg-gradient-to-r from-amber-600/10 to-orange-600/10 hover:from-amber-600/20 hover:to-orange-600/20 text-amber-300 rounded-xl transition-all duration-300 border border-amber-500/20 hover:border-amber-500/40 backdrop-blur-xl overflow-hidden text-sm md:text-base"
+                  >
+                    <div className="absolute inset-0 translate-y-[100%] bg-gradient-to-r from-amber-600/10 to-orange-600/10 transition-transform duration-300 group-hover:translate-y-[0%]" />
+                    {showCredentials ? (
+                      <EyeOff className="relative w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" />
+                    ) : (
+                      <LogIn className="relative w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" />
+                    )}
+                    <span className="relative font-medium">{showCredentials ? "Hide Login" : "Login"}</span>
+                  </button>
                 )}
               </div>
+
+              {(project.Username || project.Password) && (
+                <div
+                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                    showCredentials ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="flex flex-wrap gap-3 md:gap-4 p-4 bg-amber-500/5 rounded-xl border border-amber-500/10 backdrop-blur-xl">
+                    {project.Username && (
+                      <div className="flex items-center gap-2 bg-white/5 rounded-lg px-3 py-2 border border-white/10">
+                        <div>
+                          <p className="text-[10px] text-gray-500">Username</p>
+                          <p className="text-white font-mono text-sm">{project.Username}</p>
+                        </div>
+                        <button
+                          onClick={() => {
+                            navigator.clipboard.writeText(project.Username);
+                            setCopiedField("username");
+                            setTimeout(() => setCopiedField(null), 2000);
+                          }}
+                          className="p-1.5 rounded-md hover:bg-white/10 text-gray-400 hover:text-white transition-all"
+                        >
+                          {copiedField === "username" ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
+                        </button>
+                      </div>
+                    )}
+                    {project.Password && (
+                      <div className="flex items-center gap-2 bg-white/5 rounded-lg px-3 py-2 border border-white/10">
+                        <div>
+                          <p className="text-[10px] text-gray-500">Password</p>
+                          <p className="text-white font-mono text-sm">{project.Password}</p>
+                        </div>
+                        <button
+                          onClick={() => {
+                            navigator.clipboard.writeText(project.Password);
+                            setCopiedField("password");
+                            setTimeout(() => setCopiedField(null), 2000);
+                          }}
+                          className="p-1.5 rounded-md hover:bg-white/10 text-gray-400 hover:text-white transition-all"
+                        >
+                          {copiedField === "password" ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-4 md:space-y-6">
                 <h3 className="text-lg md:text-xl font-semibold text-white/90 mt-[3rem] md:mt-0 flex items-center gap-2 md:gap-3">
@@ -263,14 +363,15 @@ const ProjectDetails = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm md:text-base text-gray-400 opacity-50">No technologies added.</p>
+                  <p className="text-sm md:text-base text-gray-400 opacity-50">
+                    No technologies added.
+                  </p>
                 )}
               </div>
             </div>
 
             <div className="space-y-6 md:space-y-10 animate-slideInRight">
               <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl group">
-              
                 <div className="absolute inset-0 bg-gradient-to-t from-[#030014] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <img
                   src={project.Img}
@@ -297,6 +398,7 @@ const ProjectDetails = () => {
                   <p className="text-gray-400 opacity-50">No features added.</p>
                 )}
               </div>
+
             </div>
           </div>
         </div>

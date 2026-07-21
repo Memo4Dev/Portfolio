@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, ArrowRight } from 'lucide-react';
+import { ExternalLink, ArrowRight, LogIn } from 'lucide-react';
 
 function isSafeUrl(url) {
   if (!url) return false;
@@ -12,7 +12,7 @@ function isSafeUrl(url) {
   }
 }
 
-const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
+const CardProject = ({ Img, Title, Description, Link: ProjectLink, id, Username, Password }) => {
   const safeLink = isSafeUrl(ProjectLink) ? ProjectLink : null;
 
   const handleLiveDemo = (e) => {
@@ -43,6 +43,12 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
               decoding="async"
               className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
             />
+            {(Username || Password) && (
+              <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 rounded-md bg-amber-500/20 backdrop-blur-sm border border-amber-500/30 text-amber-300 text-xs font-medium">
+                <LogIn className="w-3 h-3" />
+                Login Required
+              </div>
+            )}
           </div>
 
           <div className="mt-4 flex flex-col flex-1">

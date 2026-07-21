@@ -14,6 +14,8 @@ function mapProjectRow(row) {
     Description: row.description,
     TechStack: row.techstack,
     Features: row.features,
+    Username: row.username,
+    Password: row.password,
   };
 }
 
@@ -87,7 +89,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-const ALLOWED_FIELDS = new Set(['title', 'img', 'link', 'github', 'description', 'techstack', 'features', 'sort_order']);
+const ALLOWED_FIELDS = new Set(['title', 'img', 'link', 'github', 'description', 'techstack', 'features', 'sort_order', 'username', 'password']);
 
 function mapProjectFields(body) {
   const fieldMap = {
@@ -98,6 +100,8 @@ function mapProjectFields(body) {
     Description: 'description',
     TechStack: 'techstack',
     Features: 'features',
+    Username: 'username',
+    Password: 'password',
   };
   const mapped = {};
   for (const [key, val] of Object.entries(body)) {

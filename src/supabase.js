@@ -24,5 +24,7 @@ export function mapProjectRow(row) {
     Description: row.description,
     TechStack: row.techstack,
     Features: row.features,
+    Username: row.username,
+    Password: row.password,
   };
 }
