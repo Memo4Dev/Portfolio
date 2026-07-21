@@ -33,16 +33,35 @@ const ContactPage = () => {
     });
 
     try {
-      const form = e.target;
-      const data = new FormData(form);
+      let response;
+      try {
+        response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            subject: formData.subject,
+            message: formData.message,
+          }),
+        });
+      } catch {
+        const fallbackData = new FormData();
+        fallbackData.append("name", formData.name);
+        fallbackData.append("email", formData.email);
+        fallbackData.append("subject", formData.subject);
+        fallbackData.append("message", formData.message);
+        response = await fetch("https://formsubmit.co/ajax/mesam7849@gmail.com", {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: fallbackData,
+        });
+      }
 
-      const response = await fetch("https://formsubmit.co/ajax/mesam7849@gmail.com", {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: data,
-      });
-
-      if (!response.ok) throw new Error("Network response was not ok");
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        throw new Error(body.error || "Failed to send message");
+      }
 
       Swal.fire({
         title: 'Success!',

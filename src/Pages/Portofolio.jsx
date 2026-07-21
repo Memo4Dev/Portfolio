@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { supabase } from "../supabase";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
@@ -14,6 +13,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Certificate from "../components/Certificate";
 import { Code, Award, Boxes } from "lucide-react";
+import { supabase, mapProjectRow } from "../supabase";
 
 // Separate ShowMore/ShowLess button component
 const ToggleButton = ({ onClick, isShowingMore }) => (
@@ -138,27 +138,18 @@ export default function FullWidthTabs() {
 
   const fetchData = useCallback(async () => {
     try {
-      const [
-        { data: projectData, error: projectError },
-        { data: certificateData, error: certificateError },
-      ] = await Promise.all([
-        supabase.from("projects").select("*").order("created_at", { ascending: false }),
-        supabase.from("certificates").select("*").order("created_at", { ascending: false }),
+      const [projectResult, certificateResult] = await Promise.all([
+        supabase.from('projects').select('*').order('sort_order', { ascending: true }),
+        supabase.from('certificates').select('*').order('sort_order', { ascending: true }),
       ]);
 
-      if (projectError) throw projectError;
-      if (certificateError) throw certificateError;
-
-      const formattedProjects = (projectData || []).map((doc) => ({
-        ...doc,
-        TechStack: doc.TechStack || [],
-      }));
+      const formattedProjects = (projectResult.data || []).map(mapProjectRow);
 
       setProjects(formattedProjects);
-      setCertificates(certificateData || []);
+      setCertificates(certificateResult.data || []);
 
       localStorage.setItem("projects", JSON.stringify(formattedProjects));
-      localStorage.setItem("certificates", JSON.stringify(certificateData || []));
+      localStorage.setItem("certificates", JSON.stringify(certificateResult.data || []));
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -322,7 +313,7 @@ export default function FullWidthTabs() {
         >
           <TabPanel value={value} index={0} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-5 items-stretch">
                 {displayedProjects.map((project, index) => (
                   <div
                     key={project.id || index}
@@ -383,7 +374,7 @@ export default function FullWidthTabs() {
                           : "1000"
                     }
                   >
-                    <Certificate ImgSertif={certificate.Img} />
+                    <Certificate ImgSertif={certificate.img} />
                   </div>
                 ))}
               </div>

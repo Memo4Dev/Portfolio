@@ -5,6 +5,17 @@ import {
   ChevronRight, Layers, Layout, Globe, Package, Cpu, Code,
 } from "lucide-react";
 import Swal from 'sweetalert2';
+import { supabase, mapProjectRow } from "../supabase";
+
+function isSafeUrl(url) {
+  if (!url) return false;
+  try {
+    const parsed = new URL(url);
+    return ['https:', 'http:'].includes(parsed.protocol);
+  } catch {
+    return false;
+  }
+}
 
 const TECH_ICONS = {
   React: Globe,
@@ -102,18 +113,42 @@ const ProjectDetails = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const storedProjects = JSON.parse(localStorage.getItem("projects")) || [];
-    const selectedProject = storedProjects.find((p) => String(p.id) === id);
-    
-    if (selectedProject) {
-      const enhancedProject = {
-        ...selectedProject,
-        Features: selectedProject.Features || [],
-        TechStack: selectedProject.TechStack || [],
-        Github: selectedProject.Github || 'https://github.com/memo4dev',
-      };
-      setProject(enhancedProject);
-    }
+
+    const fetchProject = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('projects')
+          .select('*')
+          .eq('id', id)
+          .single();
+
+        if (error) throw error;
+        if (data) {
+          const mapped = mapProjectRow(data);
+          const enhancedProject = {
+            ...mapped,
+            Features: mapped.Features || [],
+            TechStack: mapped.TechStack || [],
+            Github: mapped.Github || 'https://github.com/memo4dev',
+          };
+          setProject(enhancedProject);
+        }
+      } catch {
+        const storedProjects = JSON.parse(localStorage.getItem("projects")) || [];
+        const selectedProject = storedProjects.find((p) => String(p.id) === id);
+        if (selectedProject) {
+          const enhancedProject = {
+            ...selectedProject,
+            Features: selectedProject.Features || [],
+            TechStack: selectedProject.TechStack || [],
+            Github: selectedProject.Github || 'https://github.com/memo4dev',
+          };
+          setProject(enhancedProject);
+        }
+      }
+    };
+
+    fetchProject();
   }, [id]);
 
   if (!project) {
@@ -183,7 +218,7 @@ const ProjectDetails = () => {
               <ProjectStats project={project} />
 
               <div className="flex flex-wrap gap-3 md:gap-4">
-                {/* Action buttons */}
+                {isSafeUrl(project.Link) && (
                 <a
                   href={project.Link}
                   target="_blank"
@@ -194,7 +229,9 @@ const ProjectDetails = () => {
                   <ExternalLink className="relative w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" />
                   <span className="relative font-medium">Live Demo</span>
                 </a>
+                )}
 
+                {isSafeUrl(project.Github) && (
                 <a
                   href={project.Github}
                   target="_blank"
@@ -206,6 +243,7 @@ const ProjectDetails = () => {
                   <Github className="relative w-4 h-4 md:w-5 md:h-5 group-hover:rotate-12 transition-transform" />
                   <span className="relative font-medium">Github</span>
                 </a>
+                )}
               </div>
 
               <div className="space-y-4 md:space-y-6">

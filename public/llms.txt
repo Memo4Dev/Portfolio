@@ -1,0 +1,24 @@
+# Mohamed Esam Fouad — Backend Developer Portfolio
+
+## About
+Mohamed Esam Fouad (MeMo) is a backend developer and Computer Science student specializing in building efficient, scalable web applications. He has strong technical experience and systematic thinking, designing sustainable solutions with a focus on quality and innovation.
+
+## Skills
+- Backend Development: Node.js, Express.js, Python
+- Frontend Development: React, Tailwind CSS, Vite
+- Databases: PostgreSQL, Supabase
+- Languages: C++, JavaScript, HTML, CSS
+- Tools: Git, Cloudinary, Netlify
+
+## Portfolio
+This site showcases projects, certifications, and technical expertise. Projects are built with modern web technologies and demonstrate skills in full-stack development, API design, and database management.
+
+## Key Projects
+Visit https://memo-portofoli.netlify.app/ to see the full portfolio with live demos and source code links.
+
+## Contact
+- Website: https://memo-portofoli.netlify.app/
+- GitHub: https://github.com/memo4dev
+
+## Last Updated
+July 2026

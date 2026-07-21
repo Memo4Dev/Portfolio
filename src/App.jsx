@@ -8,8 +8,8 @@ import About from "./Pages/About";
 import Portofolio from "./Pages/Portofolio";
 import ContactPage from "./Pages/Contact";
 
-// Lazy-loaded pages for code splitting (only for separate routes)
-const ProjectDetails = lazy(() => import("./components/ProjectDetail"));
+import ProjectDetails from "./components/ProjectDetail";
+const AdminPage = lazy(() => import("./Pages/Admin"));
 
 const LoadingFallback = () => (
   <div className="min-h-screen bg-[#030014] flex items-center justify-center">
@@ -18,22 +18,16 @@ const LoadingFallback = () => (
 );
 
 const Footer = () => (
-  <footer>
-    <center>
-      <hr className="my-3 border-gray-400 opacity-15 sm:mx-auto lg:my-6 text-center" />
-      <span className="block text-sm pb-4 text-gray-500 text-center dark:text-gray-400">
-        © 2025{" "}
-        <a href="https://flowbite.com/" className="hover:underline">
-          Memo™
-        </a>
-        . All Rights Reserved.
-      </span>
-    </center>
+  <footer role="contentinfo">
+    <hr className="my-3 border-gray-400 opacity-15 sm:mx-auto lg:my-6 text-center" />
+    <p className="block text-sm pb-4 text-gray-500 text-center">
+      © {new Date().getFullYear()} Mohamed Esam Fouad (MeMo). All Rights Reserved.
+    </p>
   </footer>
 );
 
 const LandingPage = () => (
-  <>
+  <main>
     <Navbar />
     <AnimatedBackground />
     <Home />
@@ -41,16 +35,14 @@ const LandingPage = () => (
     <Portofolio />
     <ContactPage />
     <Footer />
-  </>
+  </main>
 );
 
 const ProjectPageLayout = () => (
-  <>
-    <Suspense fallback={<LoadingFallback />}>
-      <ProjectDetails />
-    </Suspense>
+  <main>
+    <ProjectDetails />
     <Footer />
-  </>
+  </main>
 );
 
 function App() {
@@ -59,6 +51,13 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/project/:id" element={<ProjectPageLayout />} />
+        {import.meta.env.DEV && (
+          <Route path="/admin" element={
+            <Suspense fallback={<LoadingFallback />}>
+              <AdminPage />
+            </Suspense>
+          } />
+        )}
       </Routes>
     </BrowserRouter>
   );

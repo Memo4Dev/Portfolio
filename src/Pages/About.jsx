@@ -52,7 +52,7 @@ const ProfileImage = memo(() => (
           
           <img
             src="/Photo.png"
-            alt="Profile"
+            alt="Mohamed Esam Fouad — Backend Developer"
             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-2"
             loading="lazy"
           />
@@ -133,20 +133,15 @@ const AboutPage = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [
-          { count: projectCount, error: projectError },
-          { count: certificateCount, error: certificateError }
-        ] = await Promise.all([
-          supabase.from("projects").select("*", { count: 'exact', head: true }),
-          supabase.from("certificates").select("*", { count: 'exact', head: true })
+        const [projectResult, certificateResult] = await Promise.all([
+          supabase.from('projects').select('*', { count: 'exact', head: true }),
+          supabase.from('certificates').select('*', { count: 'exact', head: true }),
         ]);
 
-        if (!projectError && !certificateError) {
-          setStats({
-            totalProjects: projectCount || 0,
-            totalCertificates: certificateCount || 0,
-          });
-        }
+        setStats({
+          totalProjects: projectResult.count || 0,
+          totalCertificates: certificateResult.count || 0,
+        });
       } catch (error) {
         console.error("Error fetching stats:", error);
       }

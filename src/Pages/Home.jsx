@@ -78,10 +78,10 @@ const TYPING_SPEED = 100;
 const ERASING_SPEED = 50;
 const PAUSE_DURATION = 2000;
 const WORDS = ["Computer Science Student", "Tech Enthusiast"];
-const TECH_STACK = ["C++", "Java Script", "React"];
+const TECH_STACK = ["C++", "Javascript", "React","Nodejs"];
 const SOCIAL_LINKS = [
   { icon: Github, link: "https://github.com/memo4dev" },
-  { icon: Linkedin, link: "https://www.linkedin.com/in/mohamed-esam-234b482a2/" },
+  { icon: Linkedin, link: "https://www.linkedin.com/in/mohamed-esam-me" },
   { icon: Instagram, link: "https://www.instagram.com/memo4dev" }
 ];
 
