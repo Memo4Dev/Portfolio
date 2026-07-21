@@ -14,10 +14,10 @@ Mohamed Esam Fouad (MeMo) is a backend developer and Computer Science student sp
 This site showcases projects, certifications, and technical expertise. Projects are built with modern web technologies and demonstrate skills in full-stack development, API design, and database management.
 
 ## Key Projects
-Visit https://memo-portofoli.netlify.app/ to see the full portfolio with live demos and source code links.
+Visit https://memo4dev.github.io/memo4dev/ to see the full portfolio with live demos and source code links.
 
 ## Contact
-- Website: https://memo-portofoli.netlify.app/
+- Website: https://memo4dev.github.io/memo4dev/
 - GitHub: https://github.com/memo4dev
 
 ## Last Updated

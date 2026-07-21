@@ -24,4 +24,4 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-Sitemap: https://memo-portofoli.netlify.app/sitemap.xml
+Sitemap: https://memo4dev.github.io/memo4dev/sitemap.xml
