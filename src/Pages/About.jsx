@@ -4,26 +4,25 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { supabase } from "../supabase"
 
-// Memoized Components
 const Header = memo(() => (
   <div className="text-center lg:mb-8 mb-2 px-[5%]">
     <div className="inline-block relative group">
       <h2 
-        className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]" 
+        className="text-4xl md:text-5xl font-bold text-secondary" 
         data-aos="zoom-in-up"
         data-aos-duration="600"
       >
-        About Me
+        <span className="font-mono text-sm text-secondary/50 mr-2">&gt;_</span>About Me
       </h2>
     </div>
     <p 
-      className="mt-2 text-gray-400 max-w-2xl mx-auto text-base sm:text-lg flex items-center justify-center gap-2"
+      className="mt-2 text-[#909097] max-w-2xl mx-auto text-base sm:text-lg flex items-center justify-center gap-2"
       data-aos="zoom-in-up"
       data-aos-duration="800"
     >
-      <Sparkles className="w-5 h-5 text-purple-400" />
+      <Sparkles className="w-5 h-5 text-secondary/60" />
       Transforming ideas into digital experiences
-      <Sparkles className="w-5 h-5 text-purple-400" />
+      <Sparkles className="w-5 h-5 text-secondary/60" />
     </p>
   </div>
 ));
@@ -35,20 +34,18 @@ const ProfileImage = memo(() => (
       data-aos="fade-up"
       data-aos-duration="1000"
     >
-      {/* Optimized gradient backgrounds with reduced complexity for mobile */}
       <div className="absolute -inset-6 opacity-[25%] z-0 hidden sm:block">
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-indigo-500 to-purple-600 rounded-full blur-2xl animate-spin-slower" />
-        <div className="absolute inset-0 bg-gradient-to-l from-fuchsia-500 via-rose-500 to-pink-600 rounded-full blur-2xl animate-pulse-slow opacity-50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-blue-600 via-cyan-500 to-teal-400 rounded-full blur-2xl animate-float opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-secondary via-accent-gold to-secondary rounded-full blur-2xl animate-spin-slower" />
+        <div className="absolute inset-0 bg-gradient-to-l from-accent-gold-light via-secondary to-accent-gold rounded-full blur-2xl animate-pulse-slow opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#c0c7d6] via-secondary to-accent-gold rounded-full blur-2xl animate-float opacity-50" />
       </div>
 
       <div className="relative">
-        <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-full overflow-hidden shadow-[0_0_40px_rgba(120,119,198,0.3)] transform transition-all duration-700 group-hover:scale-105">
-          <div className="absolute inset-0 border-4 border-white/20 rounded-full z-20 transition-all duration-700 group-hover:border-white/40 group-hover:scale-105" />
+        <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-full overflow-hidden shadow-[0_0_40px_rgba(212,175,122,0.3)] transform transition-all duration-700 group-hover:scale-105">
+          <div className="absolute inset-0 border-4 border-secondary/20 rounded-full z-20 transition-all duration-700 group-hover:border-secondary/40 group-hover:scale-105" />
           
-          {/* Optimized overlay effects - disabled on mobile */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 z-10 transition-opacity duration-700 group-hover:opacity-0 hidden sm:block" />
-          <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 via-transparent to-blue-500/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden sm:block" />
+          <div className="absolute inset-0 bg-gradient-to-t from-secondary/20 via-transparent to-secondary/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden sm:block" />
           
           <img
             src={`${import.meta.env.BASE_URL}Photo.png`}
@@ -57,11 +54,10 @@ const ProfileImage = memo(() => (
             loading="lazy"
           />
 
-          {/* Advanced hover effects - desktop only */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700 z-20 hidden sm:block">
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-white/10 to-transparent transform translate-y-full group-hover:-translate-y-full transition-transform duration-1000 delay-100" />
-            <div className="absolute inset-0 rounded-full border-8 border-white/10 scale-0 group-hover:scale-100 transition-transform duration-700 animate-pulse-slow" />
+            <div className="absolute inset-0 rounded-full border-8 border-secondary/10 scale-0 group-hover:scale-100 transition-transform duration-700 animate-pulse-slow" />
           </div>
         </div>
       </div>
@@ -71,15 +67,15 @@ const ProfileImage = memo(() => (
 
 const StatCard = memo(({ icon: Icon, color, value, label, description, animation }) => (
   <div data-aos={animation} data-aos-duration={1300} className="relative group">
-    <div className="relative z-10 bg-gray-900/50 backdrop-blur-lg rounded-2xl p-6 border border-white/10 overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl h-full flex flex-col justify-between">
+    <div className="relative z-10 bg-surface-container/80 backdrop-blur-lg rounded-2xl p-6 border border-[#46464d] overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl h-full flex flex-col justify-between">
       <div className={`absolute -z-10 inset-0 bg-gradient-to-br ${color} opacity-10 group-hover:opacity-20 transition-opacity duration-300`}></div>
       
       <div className="flex items-center justify-between mb-4">
-        <div className="w-16 h-16 rounded-full flex items-center justify-center bg-white/10 transition-transform group-hover:rotate-6">
-          <Icon className="w-8 h-8 text-white" />
+        <div className="w-16 h-16 rounded-full flex items-center justify-center bg-surface-container-high/80 transition-transform group-hover:rotate-6">
+          <Icon className="w-8 h-8 text-secondary" />
         </div>
         <span 
-          className="text-4xl font-bold text-white"
+          className="text-4xl font-bold text-[#e0e2e6]"
           data-aos="fade-up-left"
           data-aos-duration="1500"
           data-aos-anchor-placement="top-bottom"
@@ -90,7 +86,7 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
 
       <div>
         <p 
-          className="text-sm uppercase tracking-wider text-gray-300 mb-2"
+          className="text-sm uppercase tracking-wider font-mono text-secondary/70 mb-2"
           data-aos="fade-up"
           data-aos-duration="800"
           data-aos-anchor-placement="top-bottom"
@@ -99,14 +95,14 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
         </p>
         <div className="flex items-center justify-between">
           <p 
-            className="text-xs text-gray-400"
+            className="text-xs text-[#909097]"
             data-aos="fade-up"
             data-aos-duration="1000"
             data-aos-anchor-placement="top-bottom"
           >
             {description}
           </p>
-          <ArrowUpRight className="w-4 h-4 text-white/50 group-hover:text-white transition-colors" />
+          <ArrowUpRight className="w-4 h-4 text-[#c7c5ce]/50 group-hover:text-secondary transition-colors" />
         </div>
       </div>
     </div>
@@ -154,7 +150,6 @@ const AboutPage = () => {
     fetchStats();
   }, []);
 
-  // Optimized AOS initialization
   useEffect(() => {
     const initAOS = () => {
       AOS.init({
@@ -164,7 +159,6 @@ const AboutPage = () => {
 
     initAOS();
     
-    // Debounced resize handler
     let resizeTimer;
     const handleResize = () => {
       clearTimeout(resizeTimer);
@@ -178,11 +172,10 @@ const AboutPage = () => {
     };
   }, []);
 
-  // Memoized stats data
   const statsData = useMemo(() => [
     {
       icon: Code,
-      color: "from-[#6366f1] to-[#a855f7]",
+      color: "from-secondary/20 to-accent-gold/20",
       value: stats.totalProjects,
       label: "Total Projects",
       description: "Innovative web solutions crafted",
@@ -190,7 +183,7 @@ const AboutPage = () => {
     },
     {
       icon: Award,
-      color: "from-[#a855f7] to-[#6366f1]",
+      color: "from-accent-gold/20 to-secondary/20",
       value: stats.totalCertificates,
       label: "Certificates",
       description: "Professional skills validated",
@@ -198,7 +191,7 @@ const AboutPage = () => {
     },
     {
       icon: Globe,
-      color: "from-[#6366f1] to-[#a855f7]",
+      color: "from-secondary/20 to-accent-gold/20",
       value: YearExperience,
       label: "Years of Experience",
       description: "Continuous learning journey",
@@ -208,7 +201,7 @@ const AboutPage = () => {
 
   return (
     <div
-      className="h-auto pb-[10%] text-white overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%] mt-10 sm-mt-0" 
+      className="h-auto pb-[10%] text-[#e0e2e6] overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%] mt-10 sm-mt-0" 
       id="About"
     >
       <Header />
@@ -221,11 +214,11 @@ const AboutPage = () => {
               data-aos="fade-right"
               data-aos-duration="1000"
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
-                Hello, I'm
+              <span className="text-secondary">
+                <span className="font-mono text-sm text-secondary/50 mr-2">&gt;_</span>Hello, I'm
               </span>
               <span 
-                className="block mt-2 text-gray-200"
+                className="block mt-2 text-[#e0e2e6]"
                 data-aos="fade-right"
                 data-aos-duration="1300"
               >
@@ -234,7 +227,7 @@ const AboutPage = () => {
             </h2>
             
             <p 
-              className="text-base sm:text-lg lg:text-xl text-gray-400 leading-relaxed text-justify pb-4 sm:pb-0"
+              className="text-base sm:text-lg lg:text-xl text-[#909097] leading-relaxed text-justify pb-4 sm:pb-0"
               data-aos="fade-right"
               data-aos-duration="1500"
             >
@@ -247,7 +240,7 @@ const AboutPage = () => {
               <button 
                 data-aos="fade-up"
                 data-aos-duration="800"
-                className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-white font-medium transition-all duration-300 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 shadow-lg hover:shadow-xl animate-bounce-slow"
+                className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg bg-secondary text-obsidian font-medium transition-all duration-300 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 shadow-lg hover:shadow-xl hover:bg-accent-gold-light animate-bounce-slow"
               >
                 <FileText className="w-4 h-4 sm:w-5 sm:h-5" /> Download CV
               </button>
@@ -256,7 +249,7 @@ const AboutPage = () => {
               <button 
                 data-aos="fade-up"
                 data-aos-duration="1000"
-                className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg border border-[#a855f7]/50 text-[#a855f7] font-medium transition-all duration-300 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 hover:bg-[#a855f7]/10 animate-bounce-slow delay-200"
+                className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg border border-secondary/50 text-secondary font-medium transition-all duration-300 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 hover:bg-secondary/10 animate-bounce-slow delay-200"
               >
                 <Code className="w-4 h-4 sm:w-5 sm:h-5" /> View Projects
               </button>
@@ -275,8 +268,6 @@ const AboutPage = () => {
           </div>
         </a>
       </div>
-
-
     </div>
   );
 };

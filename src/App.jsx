@@ -17,9 +17,18 @@ const theme = createTheme({
   palette: {
     mode: 'dark',
     background: {
-      default: '#030014',
-      paper: '#030014',
+      default: '#101417',
+      paper: '#101417',
     },
+    primary: {
+      main: '#d4af7a',
+    },
+    secondary: {
+      main: '#e7c08a',
+    },
+  },
+  typography: {
+    fontFamily: '"Poppins", serif',
   },
 });
 
@@ -40,12 +49,12 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-[#030014] flex items-center justify-center text-white">
+        <div className="min-h-screen bg-surface flex items-center justify-center text-white">
           <div className="text-center space-y-4">
             <h1 className="text-2xl font-bold">Something went wrong</h1>
             <button
               onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-purple-600 rounded-lg hover:bg-purple-500"
+              className="px-4 py-2 bg-accent-gold text-obsidian rounded-lg hover:bg-secondary"
             >
               Reload Page
             </button>
@@ -58,15 +67,15 @@ class ErrorBoundary extends React.Component {
 }
 
 const LoadingFallback = () => (
-  <div className="min-h-screen bg-[#030014] flex items-center justify-center">
-    <div className="w-12 h-12 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin" />
+  <div className="min-h-screen bg-surface flex items-center justify-center">
+    <div className="w-12 h-12 border-4 border-secondary/30 border-t-secondary rounded-full animate-spin" />
   </div>
 );
 
 const Footer = () => (
   <footer role="contentinfo">
-    <hr className="my-3 border-gray-400 opacity-15 sm:mx-auto lg:my-6 text-center" />
-    <p className="block text-sm pb-4 text-gray-500 text-center">
+    <hr className="my-3 border-secondary/15 sm:mx-auto lg:my-6 text-center" />
+    <p className="block text-sm pb-4 text-[#c7c5ce]/60 text-center font-mono text-xs tracking-wider">
       © {new Date().getFullYear()} Mohamed Esam Fouad (MeMo). All Rights Reserved.
     </p>
   </footer>

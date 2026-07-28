@@ -15,14 +15,13 @@ import Certificate from "../components/Certificate";
 import { Code, Award, Boxes } from "lucide-react";
 import { supabase, mapProjectRow } from "../supabase";
 
-// Separate ShowMore/ShowLess button component
 const ToggleButton = ({ onClick, isShowingMore }) => (
   <button
     onClick={onClick}
     className="
       px-3 py-1.5
-      text-slate-300 
-      hover:text-white 
+      text-[#c7c5ce] 
+      hover:text-secondary 
       text-sm 
       font-medium 
       transition-all 
@@ -31,16 +30,17 @@ const ToggleButton = ({ onClick, isShowingMore }) => (
       flex 
       items-center 
       gap-2
-      bg-white/5 
-      hover:bg-white/10
+      bg-surface-container-high/60 
+      hover:bg-surface-container-highest/60
       rounded-md
       border 
-      border-white/10
-      hover:border-white/20
+      border-[#46464d]
+      hover:border-secondary/30
       backdrop-blur-sm
       group
       relative
       overflow-hidden
+      font-mono
     "
   >
     <span className="relative z-10 flex items-center gap-2">
@@ -66,7 +66,7 @@ const ToggleButton = ({ onClick, isShowingMore }) => (
         ></polyline>
       </svg>
     </span>
-    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-500/50 transition-all duration-300 group-hover:w-full"></span>
+    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-secondary/50 transition-all duration-300 group-hover:w-full"></span>
   </button>
 );
 
@@ -77,6 +77,7 @@ function TabPanel({ children, value, index, ...other }) {
       hidden={value !== index}
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
+      style={{ overflow: "hidden" }}
       {...other}
     >
       {value === index && (
@@ -114,7 +115,6 @@ export default function FullWidthTabs() {
   const theme = useTheme();
   const [value, setValue] = useState(0);
 
-  // Load from localStorage immediately so counts show on first render
   const [projects, setProjects] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("projects")) || [];
@@ -183,44 +183,34 @@ export default function FullWidthTabs() {
       className="md:px-[10%] px-[5%] w-full sm:mt-0 mt-[3rem] overflow-hidden"
       id="Portofolio"
     >
-      {/* Header section*/}
+      {/* Header section */}
       <div
         className="text-center pb-10"
         data-aos="fade-up"
         data-aos-duration="1000"
       >
-        <h2 className="inline-block text-3xl md:text-5xl font-bold text-center mx-auto text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
-          <span
-            style={{
-              color: "#6366f1",
-              backgroundImage:
-                "linear-gradient(45deg, #6366f1 10%, #a855f7 93%)",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            Portfolio Showcase
-          </span>
+        <h2 className="inline-block text-3xl md:text-5xl font-bold text-center mx-auto text-secondary">
+          <span className="font-mono text-sm text-secondary/50 mr-2">&gt;_</span>
+          Portfolio Showcase
         </h2>
-        <p className="text-slate-400 max-w-2xl mx-auto text-sm md:text-base mt-2">
+        <p className="text-[#909097] max-w-2xl mx-auto text-sm md:text-base mt-2">
           Explore my journey through projects, certifications, and technical
           expertise. Each section represents a milestone in my continuous
           learning path.
         </p>
       </div>
 
-      <Box sx={{ width: "100%" }}>
-        {/* AppBar and Tabs section */}
+      <Box sx={{ width: "100%", position: "relative" }}>
         <AppBar
           position="static"
           elevation={0}
           sx={{
             bgcolor: "transparent",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            borderRadius: "20px",
+            border: "1px solid #46464d",
+            borderRadius: "16px",
             position: "relative",
             overflow: "hidden",
+            zIndex: 10,
             "&::before": {
               content: '""',
               position: "absolute",
@@ -229,14 +219,13 @@ export default function FullWidthTabs() {
               right: 0,
               bottom: 0,
               background:
-                "linear-gradient(180deg, rgba(139, 92, 246, 0.03) 0%, rgba(59, 130, 246, 0.03) 100%)",
+                "linear-gradient(180deg, rgba(212, 175, 122, 0.03) 0%, rgba(193, 197, 227, 0.03) 100%)",
               backdropFilter: "blur(10px)",
               zIndex: 0,
             },
           }}
           className="md:px-4"
         >
-          {/* Tabs remain */}
           <Tabs
             value={value}
             onChange={handleChange}
@@ -244,33 +233,33 @@ export default function FullWidthTabs() {
             indicatorColor="secondary"
             variant="fullWidth"
             sx={{
-              // Existing styles remain
               minHeight: "70px",
               "& .MuiTab-root": {
                 fontSize: { xs: "0.9rem", md: "1rem" },
                 fontWeight: "600",
-                color: "#94a3b8",
+                color: "#909097",
                 textTransform: "none",
                 transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                 padding: "20px 0",
                 zIndex: 1,
                 margin: "8px",
                 borderRadius: "12px",
+                fontFamily: '"Poppins", serif',
                 "&:hover": {
-                  color: "#ffffff",
-                  backgroundColor: "rgba(139, 92, 246, 0.1)",
+                  color: "#e0e2e6",
+                  backgroundColor: "rgba(212, 175, 122, 0.1)",
                   transform: "translateY(-2px)",
                   "& .lucide": {
                     transform: "scale(1.1) rotate(5deg)",
                   },
                 },
                 "&.Mui-selected": {
-                  color: "#fff",
+                  color: "#e0e2e6",
                   background:
-                    "linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.2))",
-                  boxShadow: "0 4px 15px -3px rgba(139, 92, 246, 0.2)",
+                    "linear-gradient(135deg, rgba(212, 175, 122, 0.2), rgba(231, 192, 138, 0.2))",
+                  boxShadow: "0 4px 15px -3px rgba(212, 175, 122, 0.2)",
                   "& .lucide": {
-                    color: "#a78bfa",
+                    color: "#d4af7a",
                   },
                 },
               },
@@ -310,6 +299,7 @@ export default function FullWidthTabs() {
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={value}
           onChangeIndex={setValue}
+          style={{ overflow: "hidden" }}
         >
           <TabPanel value={value} index={0} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden">
@@ -356,7 +346,7 @@ export default function FullWidthTabs() {
           </TabPanel>
 
           <TabPanel value={value} index={1} dir={theme.direction}>
-            <div className="container mx-auto flex justify-center items-center overflow-hidden">
+            <div className="container mx-auto flex justify-center items-center overflow-hidden pt-4">
               <div className="grid grid-cols-1 md:grid-cols-3 md:gap-5 gap-4">
                 {displayedCertificates.map((certificate, index) => (
                   <div
@@ -392,7 +382,7 @@ export default function FullWidthTabs() {
           </TabPanel>
 
           <TabPanel value={value} index={2} dir={theme.direction}>
-            <div className="container mx-auto flex justify-center items-center overflow-hidden pb-[5%]">
+            <div className="container mx-auto flex justify-center items-center overflow-hidden pb-[5%] pt-4">
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 lg:gap-8 gap-5">
                 {techStacks.map((stack, index) => (
                   <div

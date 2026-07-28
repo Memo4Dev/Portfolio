@@ -19,6 +19,7 @@
     "@mui/icons-material": "^6.1.6",
     "@mui/material": "^6.1.6",
     "@mui/styled-engine-sc": "^6.1.6",
+    "@splinetool/react-spline": "^4.1.0",
     "@supabase/supabase-js": "^2.108.2",
     "aos": "^2.3.4",
     "clsx": "^2.1.1",
