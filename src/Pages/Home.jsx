@@ -202,7 +202,7 @@ const Home = () => {
                 <div className={`relative z-10 w-full opacity-90 transform transition-transform duration-500 ${isHovering ? "scale-105" : "scale-100"
                   }`}>
                   <img 
-                    src="/logo.png" 
+                    src={`${import.meta.env.BASE_URL}logo.png`} 
                     alt="Logo" 
                     className={`w-full h-full object-contain transition-all duration-500 ${
                       isHovering ? "scale-[110%] sm:scale-[110%] md:scale-[110%] lg:scale-[110%] rotate-2" 
