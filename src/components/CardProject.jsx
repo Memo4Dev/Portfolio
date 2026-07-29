@@ -40,7 +40,7 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, id, Username,
               alt={Title}
               loading="lazy"
               decoding="async"
-              className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-contain bg-black/20 rounded-lg transform group-hover:scale-105 transition-transform duration-500"
             />
             {(Username || Password) && (
               <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 rounded-md bg-secondary/20 backdrop-blur-sm border border-secondary/30 text-secondary text-xs font-medium font-mono">

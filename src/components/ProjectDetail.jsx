@@ -250,6 +250,18 @@ const ProjectDetails = () => {
                 </div>
               </div>
 
+              {/* Mobile Image */}
+              <div className="block lg:hidden relative rounded-2xl overflow-hidden border border-[#46464d] shadow-2xl group my-6">
+                <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <img
+                  src={project.Img}
+                  alt={project.Title}
+                  className="w-full object-cover transform transition-transform duration-700 will-change-transform group-hover:scale-105"
+                  onLoad={() => setIsImageLoaded(true)}
+                />
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-secondary/10 transition-colors duration-300 rounded-2xl" />
+              </div>
+
               <div className="prose prose-invert max-w-none">
                 <p className="text-base md:text-lg text-[#c7c5ce]/90 leading-relaxed">
                   {project.Description}
@@ -371,7 +383,8 @@ const ProjectDetails = () => {
             </div>
 
             <div className="space-y-6 md:space-y-10 animate-slideInRight">
-              <div className="relative rounded-2xl overflow-hidden border border-[#46464d] shadow-2xl group">
+              {/* Desktop Image */}
+              <div className="hidden lg:block relative rounded-2xl overflow-hidden border border-[#46464d] shadow-2xl group">
                 <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <img
                   src={project.Img}
